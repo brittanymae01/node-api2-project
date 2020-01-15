@@ -48,7 +48,7 @@ router.get("/:id/comments", (req, res) => {
 
   Posts.findPostComments(postId)
     .then(comments => {
-      if (post.length === 0) {
+      if (comments.length === 0) {
         res
           .status(404)
           .json({ message: "The post with the specified ID does not exist." });
