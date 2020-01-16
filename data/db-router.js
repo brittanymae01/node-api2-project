@@ -145,16 +145,21 @@ router.put("/:id", (req, res) => {
 
   Posts.update(updateId, req.body)
     .then(updated => {
-      if (!title || !contents) {
+      if (!title) {
         return res.status(400).json({
-          errorMessage: "Please provide title and contents for the post."
+          errorMessage: "please provide a title for the post"
         });
-      } else if (!updateId) {
-        return res
-          .status(404)
-          .json({ message: "The post with the specified ID does not exist." });
+      }
+      if (!contents) {
+        return res.status(400).json({
+          errorMessage: "please provide content for the post"
+        });
+      }
+      if (!updateId) {
+        return res.status(404).json({
+          errorMessage: "the post with the specified Id does not exist"
+        });
       } else {
-        console.log(updated);
         res.status(200).json(updated);
       }
     })
@@ -164,14 +169,33 @@ router.put("/:id", (req, res) => {
         .status(500)
         .json({ error: "The post information could not be modified." });
     });
-  Posts.findById(updateId)
-    .then(res.json(req.body))
-    .catch(error => {
-      console.log(error);
-      return res
-        .status(500)
-        .json({ error: "The post information could not be modified." });
-    });
+  //   if (!title || !contents) {
+  //     return res.status(400).json({
+  //       errorMessage: "Please provide title and contents for the post."
+  //     });
+  //   } else if (!updateId) {
+  //     return res
+  //       .status(404)
+  //       .json({ message: "The post with the specified ID does not exist." });
+  //   } else {
+  //     console.log(updated);
+  //     res.status(200).json(updated);
+  //   }
+  // })
+  // .catch(error => {
+  //   console.log(error);
+  //   return res
+  //     .status(500)
+  //     .json({ error: "The post information could not be modified." });
+  // });
+  // Posts.findById(updateId)
+  //   .then(res.json(req.body))
+  //   .catch(error => {
+  //     console.log(error);
+  //     return res
+  //       .status(500)
+  //       .json({ error: "The post information could not be modified." });
+  //   });
 });
 
 module.exports = router;
