@@ -160,7 +160,7 @@ router.put("/:id", (req, res) => {
           errorMessage: "the post with the specified Id does not exist"
         });
       } else {
-        res.status(200).json(updated);
+        Posts.findById(updateId).then(post => res.status(200).json(post));
       }
     })
     .catch(error => {
